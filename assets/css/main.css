@@ -1,0 +1,54 @@
+.nice-select{
+    width: 80px !important;
+    height: 35px !important;
+    margin-bottom: -10px !important;
+    position: relative !important;
+}
+.nice-select .list{
+    display: flex !important;
+    flex-direction: column !important;
+}
+.nice-select .current{
+    position: absolute !important;
+    height: 100%;
+    top: -5px;
+}
+.section{
+    padding: 20px 0px 100px 0px !important;
+}
+.logo-name{
+    font-size: 30px;
+}
+.brand-name{
+    font-size: 30px;
+    color: white;
+    font-weight: 700;
+}
+.demo-version{
+    display: block;
+    width: 100%;
+    height: 30px;
+    background-color: tomato;
+    color: white;
+    text-align: center;
+}
+.m_section{
+    padding-top: 50px !important;
+}
+.m_img{
+    padding: 0px 30px;
+}
+.m_cart{
+    padding-bottom: 30px;
+}
+.logo_img{
+    width: 150px;
+}
+.logo{
+    width: 400px;
+    display: flex !important;
+    flex-direction: column !important;
+}
+.logo_name{
+    font-size: 20px;
+}
