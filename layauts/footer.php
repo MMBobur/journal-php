@@ -1,5 +1,3 @@
-
-
         <!--footer-main-->
         <footer class="footer-main">
             <div class="footer-top">
@@ -15,71 +13,24 @@
                                         </a>
                                     </figure>
                                 </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Molestias, temporibus?
-                                </p>
                                 <ul class="location-link">
                                     <li class="item">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <p>Modamba, NY 80021, United States</p>
+                                        <p><?=getSite()[0]["address"]?></p>
                                     </li>
                                     <li class="item">
                                         <i class="far fa-envelope" aria-hidden="true"></i>
-                                        <a href="mailto:support@medic.com">
-                                            <p>support@medic.com</p>
+                                        <a href="mailto:<?=getSite()[0]["email"]?>">
+                                            <p><?=getSite()[0]["email"]?></p>
                                         </a>
                                     </li>
                                     <li class="item">
                                         <i class="fas fa-phone" aria-hidden="true"></i>
-                                        <p>(88017) +123 4567</p>
+                                        <p><?=getSite()[0]["phone"]?></p>
                                     </li>
                                 </ul>
-                                <ul class="list-inline social-icons">
-                                    <li class="list-inline-item">
-                                        <a href="https://facebook.com/themefisher" aria-label="facebook"><i
-                                                class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="https://twitter.com/themefisher" aria-label="twitter"><i
-                                                class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="https://instagram.com/themefisher" aria-label="instagram"><i
-                                                class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="https://github.com/themefisher" aria-label="github"><i
-                                                class="fab fa-github"></i></a>
-                                    </li>
-                                </ul>
+                               
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-5 mb-3 mb-md-0">
-                            <h2>Services</h2>
-                            <ul class="menu-link">
-                                <li>
-                                    <a href="service.html">
-                                        <i class="fa fa-angle-right" aria-hidden="true"></i>Orthopadic Liabilities</a>
-                                </li>
-                                <li>
-                                    <a href="service.html">
-                                        <i class="fa fa-angle-right" aria-hidden="true"></i>Dental
-                                        Clinic</a>
-                                </li>
-                                <li>
-                                    <a href="service.html">
-                                        <i class="fa fa-angle-right" aria-hidden="true"></i>Dormamu Clinic</a>
-                                </li>
-                                <li>
-                                    <a href="service.html">
-                                        <i class="fa fa-angle-right" aria-hidden="true"></i>Psycological Clinic</a>
-                                </li>
-                                <li>
-                                    <a href="service.html">
-                                        <i class="fa fa-angle-right" aria-hidden="true"></i>Gynaecological Clinic</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -88,21 +39,10 @@
                 <div class="container clearfix">
                     <div class="copyright-text">
                         <p>
-                            &copy; Copyright 2021. Designed &amp; Developed by
-                            <a href="https://themefisher.com/">Themefisher</a>
+                            &copy; Copyright <?=date("Y")?>
+                            <a href="http://ijsbulletin.com/">Ijsbulletin</a>
                         </p>
                     </div>
-                    <ul class="footer-bottom-link">
-                        <li>
-                            <a href="index.php">Home</a>
-                        </li>
-                        <li>
-                            <a href="about.html">About</a>
-                        </li>
-                        <li>
-                            <a href="contact.html">Contact</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </footer>

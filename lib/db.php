@@ -34,7 +34,12 @@
         return $rows;
     }
 
-    function getAll($tname){
+    function getAll($tname, $start=0){
+        $db = connect();
+        $sql = $db->query("Select * from ".$tname." ORDER by id DESC Limit {$start}, 6") or die($db->error);
+        return getArray($sql);
+    }
+    function getCategory($tname){
         $db = connect();
         $sql = $db->query("Select * from ".$tname) or die($db->error);
         return getArray($sql);
@@ -55,6 +60,7 @@
 
         foreach($r as $k) { 
             if($k["username"]==$username && $k["password"]==$md5){
+                $_SESSION["role"] = $k["role"];
                 return true;
             }
         }
@@ -88,12 +94,25 @@
 
         return true;
     }
+    function updateUser($username, $password){
+        $md5 = md5($password);
 
+        $db = connect();
+        $sql = $db->query("UPDATE `users` SET `username`='{$username}',`password`='{$md5}' WHERE `username`='{$_SESSION['username']}'")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        if($sql){
+            return true;
+        }else{
+            return false;
+        }
+    }
     function newJournal($title, $author, $tel, $email, $pdf, $categoryID){
         $db = connect();
         $date = date("Y/m/d"); 
-        $sql = $db->query("INSERT INTO `journal`(`title`, `author`, `tel`, `email`, `pdf`, `categoryID`, `date`) VALUES 
-                        ('{$title}','{$author}','{$tel}','{$email}','{$pdf}','{$categoryID}','{$date}')")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        $year = date('Y');
+        $month = date('m');
+
+        $sql = $db->query("INSERT INTO `journal`(`title`, `author`, `tel`, `email`, `pdf`, `categoryID`, `date`, `year`, `month`) VALUES 
+                        ('{$title}','{$author}','{$tel}','{$email}','{$pdf}','{$categoryID}','{$date}','{$year}','{$month}')")or die("Ma`lumot olishda xatolik.\n".$db->error);
         if($sql) return true;
         return false;
     }
@@ -101,6 +120,12 @@
     function getJournals($status){
         $db = connect();
         $sql = $db->query("Select * from journal WHERE `status`=".$status) or die($db->error);
+        return getArray($sql);
+    }
+
+    function getJournalsLimt($status, $start=0){
+        $db = connect();
+        $sql = $db->query("Select * from journal WHERE `status`={$status} ORDER by id DESC Limit {$start}, 6") or die($db->error);
         return getArray($sql);
     }
 
@@ -130,5 +155,66 @@
             }
         }
         
+    }
+    function getCategoryCount(){
+        $db = connect();
+        $sql = $db->query("SELECT category.title_uz as title_uz, category.title_en as title_en ,COUNT(journal.categoryID) as count FROM journal RIGHT JOIN category on category.id=journal.categoryID GROUP BY category.id;")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        return getArray($sql);
+    }
+
+    function getSite(){
+        $db = connect();
+        $sql = $db->query("SELECT * FROM `site` WHERE id=1")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        return getArray($sql);
+    }
+
+    function agregat_func(){
+        $db = connect();
+        $sql = $db->query("Select * From journal WHERE status=1");
+        $r = $sql->num_rows;
+        return $r;
+    }
+
+    function getArxiv(){
+        $db = connect();
+        $sql = $db->query("SELECT date, year, month FROM `journal` GROUP BY month")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        return getArray($sql);
+    }
+
+    function updateSite($email, $phone, $address, $tg, $whatsapp){
+        $db = connect();
+        $sql = $db->query("UPDATE `site` SET `email`='{$email}',`phone`='{$phone}',`address`='{$address}',`tg`='{$tg}',`whatsapp`='{$whatsapp}' WHERE id=1")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        if($sql) return true;
+        return false;
+    }
+    function insertUser($fullname, $rasm, $info, $username, $password, $role){
+        $pass = md5($password);
+        $db = connect();
+        $sql = $db->query("INSERT INTO `users`(`fullname`, `rasm`, `info`, `username`, `password`, `role`) VALUES ('{$fullname}','{$rasm}','{$info}','{$username}','{$pass}','{$role}')")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        if($sql) return true;
+        return false;
+    }
+
+    function updateUserF($id, $fullname, $info, $username, $password, $role){
+        $pass = md5($password);
+        $db = connect();
+        $sql = $db->query("UPDATE `users` SET `fullname`='{$fullname}',`info`='{$info}',`username`='{$username}',`password`='{$pass}',`role`='{$role}' WHERE `id`=".$id)or die("Ma`lumot olishda xatolik.\n".$db->error);
+        if($sql){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function getUsers(){
+        $db = connect();
+        $sql = $db->query("Select * from users") or die($db->error);
+        return getArray($sql);
+    }
+
+    function getJournalsYear($year, $month){
+        $db = connect();
+        $sql = $db->query("Select * from journal WHERE `year`={$year} and `month`={$month}") or die($db->error);
+        return getArray($sql);
     }
 ?>

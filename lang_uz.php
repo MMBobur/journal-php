@@ -18,7 +18,8 @@
     //journal
     define('about_the_jounal','Jurnal haqida');
     define('privacy_statement_author','Mualliflik huquqi va qayta chop etish ruxsati');
-
+    define('phone','Telefon');
+    
 
     //footer
     define('info', "Ma'lumotlar");

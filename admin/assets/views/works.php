@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <style>
     .tabelRow:hover{
         background-color: #eee;

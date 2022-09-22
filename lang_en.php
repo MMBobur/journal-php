@@ -14,7 +14,10 @@
     
     // right menu
     define('categories','Categories');
-
+    //journal
+    define('about_the_jounal','About the jounal');
+    define('privacy_statement_author','Privacy statement author');
+    define('phone','Phone');
 
     //footer
     define('info', "Information");

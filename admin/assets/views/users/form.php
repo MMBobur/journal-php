@@ -7,14 +7,14 @@
     
     if(isset($_POST["action"])){
         if($_FILES['rasm']['tmp_name']){
-            if(move_uploaded_file($_FILES['rasm']['tmp_name'], $_SERVER['DOCUMENT_ROOT']."/assets/images/media/".$date.".jpg")){
-                $res = insertTests($_POST["text"],$date.".jpg", $_POST["a"],$_POST["b"],$_POST["c"],$_POST["d"],$_POST["javob"], $nowDate);
+            if(move_uploaded_file($_FILES['rasm']['tmp_name'], $_SERVER['DOCUMENT_ROOT']."/assets/images/users/".$date."-".$_FILES['rasm']["name"])){
+                $res = insertUser($_POST["fullname"], $date."-".$_FILES['rasm']["name"], $_POST['info'], $_POST["username"], $_POST["password"], $_POST["role"]);
                 if($res){
-                    echo("<script>location.href = 'index.php?view=savollar';</script>");
+                    echo("<script>location.href = 'index.php?view=users';</script>");
                 }
             }
         }else{
-            $res = insertTests($_POST["text"],"", $_POST["a"],$_POST["b"],$_POST["c"],$_POST["d"],$_POST["javob"], $nowDate);
+            $res = insertUser($_POST["fullname"], "", $_POST['info'], $_POST["username"], $_POST["password"], $_POST["role"]);
             if($res){
                 echo("<script>location.href = 'index.php?view=savollar';</script>");
             }
@@ -23,13 +23,13 @@
     }
 
     if(isset($_GET["id"])){
-        $res = getOne("tests", $_GET["id"])[0];
+        $res = getOne("users", $_GET["id"])[0];
         $submit_name = "action_edit";
     }
 
     if(isset($_POST["action_edit"])){
-        if(updateTest($_POST["id"], $_POST["text"], $_POST["a"], $_POST["b"], $_POST["c"], $_POST["d"],$_POST["javob"] )){
-            echo("<script>location.href = 'index.php?view=savollar';</script>");
+        if(updateUserF($_POST["id"], $_POST["fullname"], $_POST['info'], $_POST["username"], $_POST["password"], $_POST["role"])){
+            echo("<script>location.href = 'index.php?view=users';</script>");
         }
     }
 
@@ -47,7 +47,7 @@
         <div class="col-lg-12 col-xlg-9 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form class="form-horizontal form-material" method="POST" enctype="multipart/form-data">
+                    <form class="form-horizontal form-material" onsubmit="return valid()" method="POST" enctype="multipart/form-data">
                         <?php if(!isset($res)):?>   
                             <div class="form-group mb-4">
                                 <label class="col-md-12 p-0">Rasm</label>
@@ -58,45 +58,42 @@
                         <?php endif;?>
                         
                         <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">Savol</label>
+                            <label class="col-md-12 p-0">Fullname</label>
                             <div class="col-md-12 border-bottom p-0">
-                                <textarea name="text" rows="5" class="form-control p-0 border-0"><?php if(isset($res)) echo $res['text'];?></textarea>
+                                <input value="<?php if(isset($res)) echo $res['fullname'];?>" type="text" name="fullname" placeholder="to`liq ism familiyani kiriting" class="form-control p-0 border-0" required>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Username</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input value="<?php if(isset($res)) echo $res['username'];?>" type="text" name="username" placeholder="login kiriting" class="form-control p-0 border-0" required>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Password</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input value="" type="password" id="pass1" name="password" placeholder="parolni kiriting" class="form-control p-0 border-0" required>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Repeat Password</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input value="" type="password" id="pass2" name="passwordr" placeholder="parolni takrorlang" class="form-control p-0 border-0" required>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Info</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input value="<?php if(isset($res)) echo $res['info'];?>" type="text" name="info" placeholder="shaxs haqida qisqacha malumot" class="form-control p-0 border-0" required>
                             </div>
                         </div>
 
                         <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">A javob</label>
-                            <div class="col-md-12 border-bottom p-0">
-                                <input value="<?php if(isset($res)) echo $res['a'];?>" type="text" name="a" placeholder="a javobni kiriting" class="form-control p-0 border-0">
-                            </div>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">B javob</label>
-                            <div class="col-md-12 border-bottom p-0">
-                                <input value="<?php if(isset($res)) echo $res['b'];?>" type="text" name="b" placeholder="b javobni kiriting" class="form-control p-0 border-0">
-                            </div>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">C javob</label>
-                            <div class="col-md-12 border-bottom p-0">
-                                <input value="<?php if(isset($res)) echo $res['c'];?>" type="text" name="c" placeholder="c javobni kiriting" class="form-control p-0 border-0">
-                            </div>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">D javob</label>
-                            <div class="col-md-12 border-bottom p-0">
-                                <input value="<?php if(isset($res)) echo $res['d'];?>" type="text" name="d" placeholder="d javobni kiriting" class="form-control p-0 border-0">
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-4">
-                            <label class="col-sm-12">Javob</label>
+                            <label class="col-sm-12">Role</label>
                             <div class="col-sm-12 border-bottom">
-                                <select name="javob" class="form-select shadow-none p-0 border-0 form-control-line">
-                                    <option <?php if(isset($res)) selectdCheck($res['javob'],"a"); ?> value="a">A</option>
-                                    <option <?php if(isset($res)) selectdCheck($res['javob'],"b"); ?> value="b">B</option>
-                                    <option <?php if(isset($res)) selectdCheck($res['javob'],"c"); ?> value="c">C</option>
-                                    <option <?php if(isset($res)) selectdCheck($res['javob'],"d"); ?> value="d">D</option>
+                                <select name="role" class="form-select shadow-none p-0 border-0 form-control-line" required>
+                                    <option <?php if(isset($res)) selectdCheck($res['role'],"admin"); ?> value="admin">Admin</option>
+                                    <option <?php if(isset($res)) selectdCheck($res['tole'],"user"); ?> value="user">User</option>
                                 </select>
                             </div>
                         </div>
@@ -104,7 +101,7 @@
                         <div class="form-group mb-4">
                             <div class="col-sm-12">
                                 <button class="btn btn-success">Add</button>
-                                <a href="index.php?view=savollar" class="btn btn-danger">Cancel</a>
+                                <a href="index.php?view=users" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
                         <input type="hidden" name="<?=$submit_name?>" value="savollar-add">
@@ -114,3 +111,15 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function valid(){
+        if(document.getElementById("pass1").value===document.getElementById("pass2").value){
+            return true;
+        }else{
+            alert("parollar mos kelmadi");
+        }
+        return false;
+    }
+</script>

@@ -1,6 +1,8 @@
 <?php
   include "./config.php";
   include "./lib/db.php";
+  $start = $_GET["start"] ?? 0;
+  include "./lib/helpers.php";
   include "./lib/format.php";
   
   $_SESSION['lang'] = 'uz';
