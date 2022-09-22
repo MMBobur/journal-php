@@ -62,12 +62,20 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
+                        <li class="sidebar-item" <?=$_SESSION["role"]=="admin"?"":"style='display:none'" ?>>
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php?view=users" aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="hide-menu">Foydalanuvchilar</span>
+                                <span class="hide-menu">Jamoa </span>
                             </a>
                         </li>
+
+                        <li class="sidebar-item" <?=$_SESSION["role"]=="admin"?"":"style='display:none'" ?>>
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php?view=settings" aria-expanded="false">
+                                <i class="fa fa-cogs" aria-hidden="true"></i>
+                                <span class="hide-menu">Sayt sozlamalari</span>
+                            </a>
+                        </li>
+
                         <li class="text-center p-20 upgrade-btn">
                             <a href="index.php?logout=ture" class="btn d-grid btn-danger text-white">
                                 Logout

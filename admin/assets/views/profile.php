@@ -4,7 +4,7 @@
         if($_POST["pass_1"] == $_POST["pass_2"]){
             if(updateUser($_POST['login'], $_POST['pass_1'])){
                 logout();
-                echo("<script>location.href = 'index.php?view=media';</script>");
+                echo("<script>location.href = 'index.php';</script>");
             }
         }
     }

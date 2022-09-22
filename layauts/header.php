@@ -41,23 +41,13 @@
                         <div class="top-right text-center text-md-right">
                             <ul class="social-links">
                                 <li>
-                                    <a href="https://themefisher.com/" aria-label="facebook">
-                                        <i class="fab fa-facebook-f"></i>
+                                    <a href="https://t.me/<?=getSite()[0]["tg"]?>" target="_blank" aria-label="facebook">
+                                        <i class="fab fa-telegram"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="https://themefisher.com/" aria-label="twitter">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://themefisher.com/" aria-label="google-plus">
-                                        <i class="fab fa-google-plus-g"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://themefisher.com/" aria-label="instagram">
-                                        <i class="fab fa-instagram"></i>
+                                    <a href="mailto:<?=getSite()[0]["email"]?>" aria-label="twitter">
+                                        <i class="fab fa-google"></i>
                                     </a>
                                 </li>
                                 <li>
@@ -82,7 +72,6 @@
                         <div class="logo">
                             <a href="index.php">
                                 <img loading="lazy" class="img-fluid" src="assets/images/logo.png" alt="logo" />
-                                IJOSB
                             </a>
                         </div>
                     </div>
@@ -95,17 +84,17 @@
                                     </div>
                                     <strong>Email</strong>
                                     <br />
-                                    <a href="mailto:info@medic.com">
-                                        <span>info@medic.com</span>
+                                    <a href="mailto:<?=getSite()[0]["email"]?>">
+                                        <span><?=getSite()[0]["email"]?></span>
                                     </a>
                                 </li>
                                 <li class="item text-left">
                                     <div class="icon-box">
                                         <i class="fas fa-phone"></i>
                                     </div>
-                                    <strong>Call Now</strong>
+                                    <strong><?php echo constant("phone"); ?></strong>
                                     <br />
-                                    <span>+ (88017) - 123 - 4567</span>
+                                    <span><?=getSite()[0]["phone"]?></span>
                                 </li>
                             </ul>
                         </div>

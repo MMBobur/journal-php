@@ -1,12 +1,13 @@
 <div class="page-breadcrumb bg-white">
     <div class="row align-items-center">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">Ro`yhatdan o`tkan foydalanuvchilar</h4>
+            <h4 class="page-title">Barcha jamoa azolari</h4>
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <div class="d-md-flex">
                 <ol class="breadcrumb ms-auto">
                     <li>
+                        <a href="?page=users&view=form" class="fw-normal btn btn-danger" style="color: white">Yangi qo`shish</a>
                     </li>
                 </ol>
             </div>
@@ -23,32 +24,24 @@
                             <tr>
                                 <th class="border-top-0">#</th>
                                 <th class="border-top-0">Rasm</th>
-                                <th class="border-top-0">Ism</th>
-                                <th class="border-top-0">Familiya</th>
-                                <th class="border-top-0">Sharif</th>
-                                <th class="border-top-0">Yosh</th>
-                                <th class="border-top-0">Telefon</th>
-                                <th class="border-top-0">Manzil</th>
-                                <th class="border-top-0">Oliy/1-4sinf</th>
+                                <th class="border-top-0">Ism Familiya</th>
+                                <th class="border-top-0">Info</th>
+                                <th class="border-top-0">Login</th>
+                                <th class="border-top-0">Role</th>
                                 <th class="border-top-0"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach(getAll("auth") as $key=>$r):?>
+                            <?php foreach(getAll("users") as $key=>$r):?>
                             <tr>
                                 <td><?=$key+1?></td>
+                                <td><img style="width: 100px;" src="<?=$config['base']['url']."assets/images/users/".$r['rasm']?>" alt=""></td>
+                                <td><?=$r['fullname']?></td>
+                                <td><?=$r['info']?></td>
+                                <td><?=$r['username']?></td>
+                                <td><?=$r['role']?></td>
                                 <td>
-                                    <img style="width: 100px;" src="<?=$config['base']['url']."assets/images/avatar/".$r['rasm']?>" alt="rasm mavjud emas">
-                                </td>
-                                <td><?=$r['ism']?></td>
-                                <td><?=$r['fam']?></td>
-                                <td><?=$r['sharfi']?></td>
-                                <td><?=$r['yosh']?></td>
-                                <td><?=$r['tel']?></td>
-                                <td><?=$r['manzil']?></td>
-                                <td><?=$r['category']?></td>
-                                <td>
-                                    <a href="?page=savollar&view=form&id=<?=$r['id']?>" type="button" class="btn btn-success">
+                                    <a href="?page=users&view=form&id=<?=$r['id']?>" type="button" class="btn btn-success">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <button onclick="delete_item(<?=$r['id']?>)" type="button" class="btn btn-danger">
@@ -70,7 +63,7 @@
     function delete_item(id){
         var res = confirm("Rostdan ham o`chirishni hohlaysizmi ?");
         if(res){
-            window.location.replace(`?page=savollar&view=delete&id=${id}`);
+            window.location.replace(`?page=users&view=delete&id=${id}`);
         }
     }
 </script>

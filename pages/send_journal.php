@@ -53,7 +53,7 @@
               <div class="form-group">
                 <select class="form-control" name="category" required>
                   <option disabled selected value>Jurnal categoriyasini tanlang</option>
-                  <?php foreach(getAll("category") as $data):?>
+                  <?php foreach(getCategory("category") as $data):?>
                     <option value="<?=$data['id']?>"><?=$data["title_uz"]?></option>
                   <?php endforeach;?>
                 </select>
