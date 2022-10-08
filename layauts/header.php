@@ -141,7 +141,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="z-index: 99; background-color: #48BDC5;">
                                 <li>
-                                    <a class="dropdown-item " href="?view=about_the_tournal" style="color: white;">
+                                    <a class="dropdown-item " href="?view=about_the_journal" style="color: white;">
                                         <?php echo constant("about_the_tournal"); ?>
                                     </a>
                                 </li>

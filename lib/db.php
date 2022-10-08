@@ -14,6 +14,7 @@
         
         return getJSON($sql);
     }
+    
 
     function getArray($r){
         $a=[]; $i=0;
@@ -39,6 +40,13 @@
         $sql = $db->query("Select * from ".$tname." ORDER by id DESC Limit {$start}, 6") or die($db->error);
         return getArray($sql);
     }
+
+    function getAllData($tname){
+        $db = connect();
+        $sql = $db->query("Select * from ".$tname) or die($db->error);
+        return getArray($sql);
+    }
+
     function getCategory($tname){
         $db = connect();
         $sql = $db->query("Select * from ".$tname) or die($db->error);
@@ -117,15 +125,31 @@
         return false;
     }
 
-    function getJournals($status){
+    function newJournalAdmin($title, $author, $tel, $email, $categoryID, $journalID, $page, $pdf){
         $db = connect();
-        $sql = $db->query("Select * from journal WHERE `status`=".$status) or die($db->error);
+        $date = date("Y/m/d"); 
+        $year = date('Y');
+        $month = date('m');
+
+        $sql = $db->query("INSERT INTO `journal`(`journal_id`, `title`, `author`, `tel`, `email`, `pdf`, `page`, `categoryID`, `date`, `year`, `month`) VALUES 
+                        ('{$journalID}','{$title}','{$author}','{$tel}','{$email}','{$pdf}','{$page}','{$categoryID}','{$date}','{$year}','{$month}')")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        if($sql) return true;
+        return false;
+    }
+
+    function getJournals($status=0){
+        $db = connect();
+        if($status<=0){
+            $sql = $db->query("Select * from journal WHERE `journal_id`=0") or die($db->error);
+        }else{
+            $sql = $db->query("Select * from journal WHERE `journal_id`>0") or die($db->error);
+        }
         return getArray($sql);
     }
 
-    function getJournalsLimt($status, $start=0){
+    function getJournalsLimt($start=0){
         $db = connect();
-        $sql = $db->query("Select * from journal WHERE `status`={$status} ORDER by id DESC Limit {$start}, 6") or die($db->error);
+        $sql = $db->query("Select * from journals ORDER by id DESC Limit {$start}, 6") or die($db->error);
         return getArray($sql);
     }
 
@@ -215,6 +239,35 @@
     function getJournalsYear($year, $month){
         $db = connect();
         $sql = $db->query("Select * from journal WHERE `year`={$year} and `month`={$month}") or die($db->error);
+        return getArray($sql);
+    }
+
+    function insertJournal($title, $text, $rasm, $pdf){
+        $db = connect();
+        $date = date("Y/m/d"); 
+
+        $sql = $db->query("INSERT INTO `journals`(`title`, `text`, `rasm`, `date`, `pdf`) VALUES 
+                        ('{$title}','{$text}','{$rasm}','{$date}','{$pdf}')")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        if($sql) return true;
+        return false;
+    }
+    function updateJournal($id, $title, $text){
+        $db = connect();
+        $sql = $db->query("UPDATE `journals` SET `title`='{$title}',`text`='{$text}' WHERE id=".$id)or die("Ma`lumot olishda xatolik.\n".$db->error);
+        if($sql) return true;
+        return false;
+    }
+    function connectJournal($id, $journal, $page){
+        $db = connect();
+        $sql = $db->query("UPDATE `journal` SET `journal_id`='{$journal}', `page`='{$page}' WHERE id=".$id)or die("Ma`lumot olishda xatolik.\n".$db->error);
+        if($sql) return true;
+        return false;
+    }
+
+    function getSubmissions($id){
+        $db = connect();
+        $sql = $db->query("SELECT * FROM `journal` where journal_id={$id}")or die("Ma`lumot olishda xatolik.\n".$db->error);
+        
         return getArray($sql);
     }
 ?>

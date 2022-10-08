@@ -58,10 +58,15 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php" aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="hide-menu">Maqolalar</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item" >
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php?view=journal" aria-expanded="false">
+                                <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Jurnallar</span>
                             </a>
                         </li>
-
                         <li class="sidebar-item" <?=$_SESSION["role"]=="admin"?"":"style='display:none'" ?>>
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php?view=users" aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
@@ -75,6 +80,8 @@
                                 <span class="hide-menu">Sayt sozlamalari</span>
                             </a>
                         </li>
+
+                        
 
                         <li class="text-center p-20 upgrade-btn">
                             <a href="index.php?logout=ture" class="btn d-grid btn-danger text-white">

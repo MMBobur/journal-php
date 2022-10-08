@@ -14,6 +14,9 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <div class="d-md-flex">
                 <ol class="breadcrumb ms-auto">
+                    <li>
+                        <a href="?page=works&view=form" class="fw-normal btn btn-danger" style="color: white">Yangi qo`shish</a>
+                    </li>
                 </ol>
             </div>
         </div>
@@ -47,20 +50,34 @@
                                         <th class="border-top-0">Avtor</th>
                                         <th class="border-top-0">Telefon</th>
                                         <th class="border-top-0">Email</th>
-                                        <th class="border-top-0">PDF</th>
-                                        <th class="border-top-0">Saytga chiqarish</th>
+                                        <th class="border-top-0">Word</th>
+                                        <th class="border-top-0">Jornalga biriktirish</th>
                                         <th class="border-top-0">O`chirib tashlash</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach(getJournals(0) as $key=>$r):?>
+                                    <?php foreach(getJournals() as $key=>$r):?>
                                         <tr class="tabelRow">
                                             <td><?=$key+1?></td>
                                             <td><?=$r['author']?></td>
                                             <td><?=$r['tel']?></td>
                                             <td><?=$r['email']?></td>
-                                            <td><a href="?view=pdf&id=<?=$r["id"]?>" class="btn btn-primary">ko`rish</a></td>
-                                            <td><button onclick="setStatus(<?=$r['id']?>, true)" class="btn btn-warning">Tasdiqlash</button></td>
+                                            <td style="display: flex; flex-direction: column;">
+                                                <a style="margin-bottom: 5px;" href="?view=pdf&id=<?=$r["id"]?>" class="btn btn-primary">ko`rish</a>
+                                                <a href="<?=$config['base']['url']."assets/pdf/".$r["pdf"]?>" class="btn btn-warning">yuklash</a>
+                                            </td>
+                                            <td >
+                                                <div style="display: flex; flex-direction: column;">
+                                                    <select style="margin-bottom: 2px;" id="journal_id">
+                                                        <option disabled selected value>Jurnalni tanlang</option>
+                                                        <?php foreach(getAllData("journals") as $key=>$g):?>
+                                                            <option value="<?=$g["id"]?>"><?=textShorten($g["title"], 50)?></option>
+                                                        <?php endforeach;?>
+                                                    </select>
+                                                    <input type="text" style="margin-bottom: 2px;" id="page_num">
+                                                    <button class="btn btn-primary" onclick="connectToJournal(<?=$r['id']?>)">qo`shish</button>
+                                                </div>
+                                            </td>
                                             <td><button onclick="delJournal(<?=$r['id']?>)" class="btn btn-danger">O`chirish</butt></td>
                                         </tr>
                                     <?php endforeach;?>
@@ -77,8 +94,7 @@
                                         <th class="border-top-0">Avtor</th>
                                         <th class="border-top-0">Telefon</th>
                                         <th class="border-top-0">Email</th>
-                                        <th class="border-top-0">PDF</th>
-                                        <th class="border-top-0">Saytdan olish</th>
+                                        <th class="border-top-0">Word</th>
                                         <th class="border-top-0">O`chirib tashlash</th>
                                     </tr>
                                 </thead>
@@ -89,8 +105,9 @@
                                             <td><?=$r['author']?></td>
                                             <td><?=$r['tel']?></td>
                                             <td><?=$r['email']?></td>
-                                            <td><a href="?view=pdf&id=<?=$r["id"]?>" class="btn btn-primary">ko`rish</a></td>
-                                            <td><button onclick="setStatus(<?=$r['id']?>, false)" class="btn btn-danger">Olib tashlash</button></td>
+                                            <td>
+                                                <a href="?view=pdf&id=<?=$r["id"]?>" class="btn btn-primary">ko`rish</a>
+                                            </td>
                                             <td><button onclick="delJournal(<?=$r['id']?>)" class="btn btn-danger">O`chirish</butt></td>
                                         </tr>
                                     <?php endforeach;?>
@@ -106,6 +123,12 @@
 </div>
 
 <script>
+    const connectToJournal = (id) => {
+        const journalID = document.getElementById("journal_id").value;
+        const page_num = document.getElementById("page_num").value;
+        window.location.replace(`?view=accept&connect=${journalID}&id=${id}&page-num=${page_num}`);
+    }
+
     const setStatus = (id, status) => {
         if(status){
             var res = confirm("Saytga chiqarishni hohlaysizmi ?");
